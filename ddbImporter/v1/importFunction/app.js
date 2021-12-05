@@ -16,17 +16,17 @@
 'use strict'
 
 const AWS = require('aws-sdk')
-AWS.config.region = process.env.AWS_REGION 
+AWS.config.region = process.env.AWS_REGION
 const s3 = new AWS.S3()
 
 const docClient = new AWS.DynamoDB.DocumentClient()
 const { v4: uuidv4 } = require('uuid')
 
-const ddbTable = process.env.DDBtable 
+const ddbTable = process.env.DDBtable
 
 // The Lambda handler
 exports.handler = async (event) => {
-  console.log (JSON.stringify(event, null, 2))
+  console.log(JSON.stringify(event, null, 2))
   console.log('Using DDB table: ', ddbTable)
 
   await Promise.all(
@@ -74,11 +74,11 @@ const ddbLoader = async (data) => {
         RequestItems: {}
       }
       params.RequestItems[ddbTable] = []
-  
+
       item_data.forEach(item => {
         for (let key of Object.keys(item)) {
           // An AttributeValue may not contain an empty string
-          if (item[key] === '') 
+          if (item[key] === '')
             delete item[key]
         }
 
